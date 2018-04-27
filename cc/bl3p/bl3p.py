@@ -10,34 +10,36 @@ import urllib.parse
 
 class Bl3p(object):
     
-    def __init__(self, url, pub_key, sec_key):
-        self.url = url
-        self.pub_key = pub_key
-        self.sec_key = sec_key
+    def __init__(self, url='https://api.bl3p.eu/1/'):
+        self.__url = url
+
+    def set_credentials(self, pub_key, sec_key):
+        self.__pub_key = pub_key
+        self.__sec_key = sec_key
     
-    def __request(self, path, params):
+    def __request(self, endpoint, params):
         post_data = urllib.parse.urlencode(params)
 
-        body = ('%s%c%s' % (path, 0x00, post_data)).encode()
+        body = ('%s%c%s' % (endpoint, 0x00, post_data)).encode()
 
-        sec_key_bin = base64.b64decode(self.sec_key)
+        sec_key_bin = base64.b64decode(self.__sec_key)
 
         signature_bin = hmac.new(sec_key_bin, body, hashlib.sha512)
 
         signature = base64.b64encode(signature_bin.digest()).decode()
 
-        fullpath = '%s%s' % (self.url, path)
+        full_url = '%s%s' % (self.__url, endpoint)
 
         headers = {
-                'Rest-Key': self.pub_key,
+                'Rest-Key': self.__pub_key,
                 'Rest-Sign': signature
                 }
 
-        r = requests.get(fullpath, headers=headers, data=post_data)
+        r = requests.get(full_url, params=params, headers=headers)
 
         response_code = r.status_code
         if response_code != 200:
-            raise Exception('unexpected response code: %d' % response_code)
+            raise Exception('Exception response code: %d' % response_code)
 
         return r.json()
 
