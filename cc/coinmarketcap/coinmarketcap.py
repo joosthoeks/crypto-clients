@@ -5,13 +5,13 @@ import requests
 
 class CoinMarketCap(object):
 
-    def __init__(self, url):
+    def __init__(self, url='https://api.coinmarketcap.com/v1/'):
         self.__url = url
     
-    def __request(self, path, params):
-        full_path = '%s%s' % (self.__url, path)
+    def __request(self, endpoint, params):
+        full_url = '%s%s' % (self.__url, endpoint)
 
-        r = requests.get(full_path, params=params)
+        r = requests.get(full_url, params=params)
 
         response_code = r.status_code
         if response_code != 200:
