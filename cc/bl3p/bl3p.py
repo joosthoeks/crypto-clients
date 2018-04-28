@@ -50,52 +50,54 @@ class Bl3p(object):
     def trades(self, market):
         return self.__request('%s/trades' % market, {})
 
-    # TODO Authenticated API | HTTP Calls
-    def get_btc_multiplier(self):
-        return 100000000
+    # Authenticated API | HTTP Calls
+    def order_add(self, market, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('%s/money/order/add' % market, params, True)
 
-    def get_eur_multiplier(self):
-        return 100000
-
-    def add_order(self, market, order_type, order_amount, order_price):
-        params = {
-            'type' : order_type,
-            'amount_int' : order_amount,
-            'price_int' : order_price,
-            'fee_currency' : 'BTC'
-        }
-        return self.__request('%s/money/order/add' % market, params)
-
-    def cancel_order(self, market, order_id):
+    def order_cancel(self, market, order_id):
         params = {'order_id': order_id}
-        return self.__request('%s/money/order/cancel' % market, params)
+        return self.__request('%s/money/order/cancel' % market, params, True)
 
-    def order_info(self, market, order_id):
-        params = {'order_id' : order_id}
+    def order_result(self, market, order_id):
+        params = {'order_id': order_id}
         return self.__request('%s/money/order/result' % market, params, True)
 
-    def get_all_active_orders(self, market):
-        return self.__request('%s/money/orders' % market, {}, True);
-
-    def full_depth(self, market):
+    def depth_full(self, market):
         return self.__request('%s/money/depth/full' % market, {}, True)
 
-    def get_new_deposit_address(self, market):
-        return self.__request('%s/money/new_deposit_address' % market, {}, True)
-
-    def get_last_deposit_address(self, market):
-        return self.__request('%s/money/deposit_address' % market, {}, True)
-
-    def fetch_last_1000_trades(self, market, trade_id):
-        params = {'trade_id': trade_id}
-        return self.__request('%s/trades' % market, params)
-
-    def get_balances(self):
-        params = {}
-        return self.__request('GENMKT/money/info', params, True)
-    
     def wallet_history(self, **kwargs):
         params = {}
         params.update(kwargs)
         return self.__request('GENMKT/money/wallet/history', params, True)
+
+    def new_deposit_address(self, currency):
+        params = {'currency': currency}
+        return self.__request('GENMKT/money/new_deposit_address', params, True)
+
+    def deposit_address(self, currency):
+        params = {'currency': currency}
+        return self.__request('GENMKT/money/deposit_address', params, True)
+
+    def withdraw(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('GENMKT/money/withdraw', params, True)
+
+    def info(self):
+        return self.__request('GENMKT/money/info', {}, True)
+
+    def orders(self, market):
+        return self.__request('%s/money/orders' % market, {}, True)
+
+    def orders_history(self, market, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('%s/money/orders/history' % market, params, True)
+
+    def trades_fetch(self, market, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('%s/money/trades/fetch' % market, params, True)
 
