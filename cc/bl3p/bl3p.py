@@ -17,8 +17,8 @@ class Bl3p(object):
         self.__sec_key = sec_key
     
     def __get_credential(self, endpoint, params):
-        post_data = urllib.parse.urlencode(params)
-        body = ('%s%c%s' % (endpoint, 0x00, post_data)).encode()
+        query_str = urllib.parse.urlencode(params)
+        body = ('%s%c%s' % (endpoint, 0x00, query_str)).encode()
         sec_key_bin = base64.b64decode(self.__sec_key)
         signature_bin = hmac.new(sec_key_bin, body, hashlib.sha512)
         signature = base64.b64encode(signature_bin.digest()).decode()
