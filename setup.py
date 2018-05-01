@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 
 setup(
     name='crypto-clients',
-    version='20180430.0',
-    description='Python 3 crypto-clients',
+    version='20180501.0',
+    description='Python 3 API crypto-clients',
     keywords='python3 crypto clients',
     url='https://github.com/joosthoeks/crypto-clients',
     author='Joost Hoeks',
