@@ -18,10 +18,14 @@ class Bl3p(object):
     
     def __get_credential(self, endpoint, params):
         query_str = urllib.parse.urlencode(params)
-        body = ('%s%c%s' % (endpoint, 0x00, query_str)).encode()
+        body = ('%s%c%s' % (endpoint, 0x00, query_str))
         sec_key_bin = base64.b64decode(self.__sec_key)
-        signature_bin = hmac.new(sec_key_bin, body, hashlib.sha512)
-        signature = base64.b64encode(signature_bin.digest()).decode()
+        signature_bin = hmac.new(
+                sec_key_bin,
+                msg=body.encode('utf-8'),
+                digestmod=hashlib.sha512
+                )
+        signature = base64.b64encode(signature_bin.digest()).decode('utf-8')
         headers = {
                 'Rest-Key': self.__pub_key,
                 'Rest-Sign': signature
