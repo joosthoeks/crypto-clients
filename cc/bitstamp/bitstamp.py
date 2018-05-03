@@ -19,12 +19,12 @@ class Bitstamp(object):
     
     def __get_credential(self):
         nonce = int(time.time())
-        message = nonce + self.__customer_id + self.__pub_key
+        message = str(nonce) + str(self.__customer_id) + self.__pub_key
         signature = hmac.new(
-                self.__sec_key,
-                msg=message,
+                self.__sec_key.encode('utf8'),
+                msg=message.encode('utf8'),
                 digestmod=hashlib.sha256
-                ).hexdigist().upper()
+                ).hexdigest().upper()
         return nonce, signature
 
     def __request(self, endpoint, params, credential=False):
@@ -64,4 +64,7 @@ class Bitstamp(object):
         return self.__request('trading-pairs-info/', {})
 
     # TODO Private functions:
-    
+    def balance(self):
+        return self.__request('balance/', {}, True)
+
+
