@@ -31,7 +31,12 @@ class Bitstamp(object):
         full_url = '%s%s' % (self.__url, endpoint)
         if credential:
             nonce, signature = self.__get_credential()
-            # TODO
+            credential = {
+                    'key': self.__pub_key,
+                    'nonce': nonce,
+                    'signature': signature,
+                    }
+            params.update(credential)
             r = requests.post(full_url, data=params)
         else:
             r = requests.get(full_url, params=params)
@@ -50,8 +55,9 @@ class Bitstamp(object):
     def order_book(self, market):
         return self.__request('order_book/%s/' % market, {})
 
-    def transactions(self, market, time='hour'):
-        params = {'time': time}
+    def transactions(self, market, **kwargs):
+        params = {}
+        params.update(kwargs)
         return self.__request('transactions/%s/' % market, params)
 
     def trading_pairs_info(self):
