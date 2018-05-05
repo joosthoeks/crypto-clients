@@ -64,7 +64,23 @@ class Bitstamp(object):
         return self.__request('trading-pairs-info/', {})
 
     # TODO Private functions:
-    def balance(self):
-        return self.__request('balance/', {}, True)
+    def balance(self, market=None):
+        if market is None:
+            return self.__request('balance/', {}, True)
+        else:
+            return self.__request('balance/%s/' % market, {}, True)
 
+    def user_transactions(self, market=None, **kwargs):
+        params = {}
+        params.update(kwargs)
+        if market is None:
+            return self.__request('user_transactions/', params, True)
+        else:
+            return self.__request('user_transactions/%s/' % market, params, True)
+
+    def open_orders(self, market=None):
+        if market is None:
+            return self.__request('open_orders/all/', {}, True)
+        else:
+            return self.__request('open_orders/%s/' % market, {}, True)
 
