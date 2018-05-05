@@ -22,10 +22,10 @@ class Bl3p(object):
         sec_key_bin = base64.b64decode(self.__sec_key)
         signature_bin = hmac.new(
                 sec_key_bin,
-                msg=body.encode('utf-8'),
+                msg=body.encode('utf8'),
                 digestmod=hashlib.sha512
                 )
-        signature = base64.b64encode(signature_bin.digest()).decode('utf-8')
+        signature = base64.b64encode(signature_bin.digest()).decode('utf8')
         headers = {
                 'Rest-Key': self.__pub_key,
                 'Rest-Sign': signature

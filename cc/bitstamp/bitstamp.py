@@ -21,8 +21,8 @@ class Bitstamp(object):
         nonce = int(time.time())
         message = str(nonce) + str(self.__customer_id) + self.__pub_key
         signature = hmac.new(
-                self.__sec_key.encode('utf-8'),
-                msg=message.encode('utf-8'),
+                self.__sec_key.encode('utf8'),
+                msg=message.encode('utf8'),
                 digestmod=hashlib.sha256
                 ).hexdigest().upper()
         return nonce, signature
