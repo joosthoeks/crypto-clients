@@ -106,3 +106,43 @@ class Bitstamp(object):
         params = {'amount': amount}
         return self.__request('sell/market/%s/' % market, params, True)
 
+    def withdrawal_requests(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('withdrawal-requests/', params, True)
+
+    def ltc_withdrawal(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('ltc_withdrawal/', params, True)
+
+    def ltc_address(self):
+        return self.__request('ltc_address/', {}, True)
+
+    def eth_withdrawal(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('eth_withdrawal/', params, True)
+
+    def eth_address(self):
+        return self.__request('eth_address/', {}, True)
+
+    def bch_withdrawal(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('bch_withdrawal/', params, True)
+
+    def bch_address(self):
+        return self.__request('bch_address/', {}, True)
+
+    def transfer_to_main(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('transfer-to-main/', params, True)
+
+    def transfer_from_main(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('transfer-from-main/', params, True)
+
+
