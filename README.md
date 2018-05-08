@@ -12,7 +12,7 @@ $ cd crypto-clients
 $ git pull
 ```
 
-Exchange | Version | Doc | TODO
+Service | Version | Doc | TODO
 --- | --- | --- | ---
 [Binance.com](https://www.binance.com/)||[doc](https://github.com/binance-exchange/binance-official-api-docs/)|
 [Bitstamp.net](https://www.bitstamp.net/)|2|[doc](https://www.bitstamp.net/api/)|DONE
