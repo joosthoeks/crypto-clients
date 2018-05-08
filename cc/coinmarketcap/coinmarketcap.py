@@ -5,7 +5,7 @@ import requests
 
 class CoinMarketCap(object):
 
-    def __init__(self, url='https://api.coinmarketcap.com/v1/'):
+    def __init__(self, url='https://api.coinmarketcap.com/v2/'):
         self.__url = url
     
     def __request(self, endpoint, params):
@@ -19,18 +19,21 @@ class CoinMarketCap(object):
 
         return r.json()
 
+    def get_listings(self):
+        return self.__request('listings/', {})
+
     def get_ticker(self, **kwargs):
         params = {}
         params.update(kwargs)
-        return self.__request('ticker', params)
+        return self.__request('ticker/', params)
 
     def get_ticker_id(self, id, **kwargs):
         params = {}
         params.update(kwargs)
-        return self.__request('ticker/%s' % id, params)
+        return self.__request('ticker/%s/' % id, params)
 
     def get_global(self, **kwargs):
         params = {}
         params.update(kwargs)
-        return self.__request('global', params)
+        return self.__request('global/', params)
 
