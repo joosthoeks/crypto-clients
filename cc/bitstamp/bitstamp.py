@@ -145,4 +145,33 @@ class Bitstamp(object):
         params.update(kwargs)
         return self.__request('transfer-from-main/', params, True)
 
+    def xrp_withdrawal(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('xrp_withdrawal/', params, True)
+
+    def xrp_address(self):
+        return self.__request('xrp_address/', {}, True)
+
+    def withdrawal_open(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('withdrawal/open/', params, True)
+
+    def withdrawal_status(self, id):
+        params = {'id': id}
+        return self.__request('withdrawal/status/', params, True)
+
+    def withdrawal_cancel(self, id):
+        params = {'id': id}
+        return self.__request('withdrawal/cancel/', params, True)
+
+    def liquidation_address_new(self, liquidation_currency):
+        params = {'liquidation_currency': liquidation_currency}
+        return self.__request('liquidation_address/new/', params, True)
+
+    def liquidation_address_info(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('liquidation_address/info/', params, True)
 
