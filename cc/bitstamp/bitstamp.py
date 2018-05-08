@@ -84,3 +84,25 @@ class Bitstamp(object):
         else:
             return self.__request('open_orders/%s/' % market, {}, True)
 
+    def cancel_order(self, id):
+        params = {'id': id}
+        return self.__request('cancel_order/', params, True)
+
+    def buy(self, market, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('buy/%s/' % market, params, True)
+
+    def buy_market(self, market, amount):
+        params = {'amount': amount}
+        return self.__request('buy/market/%s/' % market, params, True)
+
+    def sell(self, market, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('sell/%s/' % market, params, True)
+
+    def sell_market(self, market, amount):
+        params = {'amount': amount}
+        return self.__request('sell/market/%s/' % market, params, True)
+
