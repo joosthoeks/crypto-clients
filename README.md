@@ -12,6 +12,12 @@ $ cd crypto-clients
 $ git pull
 ```
 
+## Examples / Run / Test
+```
+$ cd examples
+$ python3 coinmarketcap.py
+```
+
 Service | Ver | Doc | TODO
 --- | --- | --- | ---
 [Binance.com](https://www.binance.com/)||[doc](https://github.com/binance-exchange/binance-official-api-docs/)|
