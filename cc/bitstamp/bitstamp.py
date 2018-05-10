@@ -63,7 +63,7 @@ class Bitstamp(object):
     def trading_pairs_info(self):
         return self.__request('trading-pairs-info/', {})
 
-    # TODO Private functions:
+    # Private functions:
     def balance(self, market=None):
         if market is None:
             return self.__request('balance/', {}, True)
