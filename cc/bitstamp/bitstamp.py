@@ -1,7 +1,6 @@
 
 
 import requests
-import urllib.parse
 import time
 import hmac
 import hashlib
