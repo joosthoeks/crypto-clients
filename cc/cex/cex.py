@@ -86,7 +86,7 @@ class Cex(object):
         params.update(kwargs)
         return self.__request('trade_history/%s/%s/' % (symbol1, symbol2), params)
 
-    # TODO Private API calls:
+    # Private API calls:
     def balance(self):
         return self.__request('balance/', {}, 'POST', True)
 
@@ -157,5 +157,4 @@ class Cex(object):
 
     def get_marginal_fee(self, symbol1, symbol2):
         return self.__request('get_marginal_fee/%s/%s/' % (symbol1, symbol2), {}, 'POST', True)
-
 
