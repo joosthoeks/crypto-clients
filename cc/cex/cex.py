@@ -125,4 +125,37 @@ class Cex(object):
         params = {'id': id}
         return self.__request('get_order_tx/', params, 'POST', True)
 
+    def get_address(self, currency):
+        params = {'currency': currency}
+        return self.__request('get_address/', params, 'POST', True)
+
+    def get_myfee(self):
+        return self.__request('get_myfee/', {}, 'POST', True)
+
+    def cancel_replace_order(self, symbol1, symbol2, type):
+        params = {'type': type}
+        return self.__request('cancel_replace_order/%s/%s/' % (symbol1, symbol2), params, 'POST', True)
+
+    def open_position(self, symbol1, symbol2, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('open_position/%s/%s/' % (symbol1, symbol2), params, 'POST', True)
+
+    def get_position(self, id):
+        params = {'id': id}
+        return self.__request('get_position/', params, 'POST', True)
+
+    def open_positions(self, symbol1, symbol2):
+        return self.__request('open_positions/%s/%s/' % (symbol1, symbol2), {}, 'POST', True)
+
+    def close_position(self, symbol1, symbol2, id):
+        params = {'id': id}
+        return self.__request('close_position/%s/%s/' % (symbol1, symbol2), params, 'POST', True)
+
+    def archived_positions(self, symbol1, symbol2):
+        return self.__request('archived_positions/%s/%s/' % (symbol1, symbol2), {}, 'POST', True)
+
+    def get_marginal_fee(self, symbol1, symbol2):
+        return self.__request('get_marginal_fee/%s/%s/' % (symbol1, symbol2), {}, 'POST', True)
+
 
