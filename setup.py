@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='crypto-clients',
-    version='20180514.0',
+    version='20180517.0',
     description='Python 3 API crypto-clients',
     keywords='python3 crypto clients',
     url='https://github.com/joosthoeks/crypto-clients',
