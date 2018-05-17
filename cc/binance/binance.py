@@ -1,6 +1,9 @@
 
 
 import requests
+import hashlib
+import hmac
+import urllib.parse
 
 
 class Binance(object):
@@ -8,9 +11,34 @@ class Binance(object):
     def __init__(self, url='https://api.binance.com/api/'):
         self.__url = url
 
-    def __request(self, endpoint, params, method='GET', credential=None):
+    def set_credential(self, pub_key, sec_key):
+        self.__pub_key = pub_key
+        self.__sec_key = sec_key
+
+    def __get_credential(self, query_str):
+        signature = hmac.new(
+                self.__sec_key.encode('utf8'),
+                msg=query_str.encode('utf8'),
+                digestmod=hashlib.sha256
+                )
+        headers = {
+                'X-MBX-APIKEY': self.__pub_key
+                }
+        return signature, headers
+
+    def __request(self, endpoint, params, method='GET', credential=False):
         full_url = '%s%s' % (self.__url, endpoint)
-        if credential is None:
+        if credential:
+            query_str = urllib.parse.urlencode(params)
+            signature, headers = self.__get_credential(query_str)
+            params.update({'signature': signature})
+            if method is 'POST':
+                r = requests.post(full_url, data=params, headers=headers)
+            elif method is 'DELETE':
+                r = requests.delete(full_url, data=params, headers=headers)
+            else:
+                r = requests.get(full_url, params=params, headers=headers)
+        else:
             r = requests.get(full_url, params=params)
         response_code = r.status_code
         if response_code != 200:
@@ -63,5 +91,45 @@ class Binance(object):
         params.update(kwargs)
         return self.__request('v3/ticker/bookTicker', params)
 
-    # TODO Account endpoints:
+    # Account endpoints:
+    def order(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('v3/order', params, 'POST', True)
+
+    def order_test(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('v3/order/test', params, 'POST', True)
+
+    def order_status(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('v3/order', params, 'GET', True)
+
+    def order_cancel(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('v3/order', params, 'DELETE', True)
+
+    def open_orders(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('v3/openOrders', params, 'GET', True)
+
+    def all_orders(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('v3/allOrders', params, 'GET', True)
+
+    def account(self, kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('v3/account', params, 'GET', True)
+
+    def my_trades(self, **kwargs):
+        params = {}
+        params.update(kwargs)
+        return self.__request('v3/myTrades', params, 'GET', True)
+
 
