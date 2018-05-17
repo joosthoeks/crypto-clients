@@ -4,6 +4,7 @@ import requests
 import hashlib
 import hmac
 import urllib.parse
+import time
 
 
 class Binance(object):
@@ -15,12 +16,14 @@ class Binance(object):
         self.__pub_key = pub_key
         self.__sec_key = sec_key
 
-    def __get_credential(self, query_str):
+    def __get_credential(self, params):
+        params.update({'timestamp': (int(time.time()) * 1000)})
+        query_str = urllib.parse.urlencode(params)
         signature = hmac.new(
                 self.__sec_key.encode('utf8'),
                 msg=query_str.encode('utf8'),
                 digestmod=hashlib.sha256
-                )
+                ).hexdigest()
         headers = {
                 'X-MBX-APIKEY': self.__pub_key
                 }
@@ -29,8 +32,7 @@ class Binance(object):
     def __request(self, endpoint, params, method='GET', credential=False):
         full_url = '%s%s' % (self.__url, endpoint)
         if credential:
-            query_str = urllib.parse.urlencode(params)
-            signature, headers = self.__get_credential(query_str)
+            signature, headers = self.__get_credential(params)
             params.update({'signature': signature})
             if method is 'POST':
                 r = requests.post(full_url, data=params, headers=headers)
@@ -102,13 +104,13 @@ class Binance(object):
         params.update(kwargs)
         return self.__request('v3/order/test', params, 'POST', True)
 
-    def order_status(self, **kwargs):
-        params = {}
+    def order_status(self, symbol, **kwargs):
+        params = {'symbol': symbol}
         params.update(kwargs)
         return self.__request('v3/order', params, 'GET', True)
 
-    def order_cancel(self, **kwargs):
-        params = {}
+    def order_cancel(self, symbol, **kwargs):
+        params = {'symbol': symbol}
         params.update(kwargs)
         return self.__request('v3/order', params, 'DELETE', True)
 
@@ -117,18 +119,16 @@ class Binance(object):
         params.update(kwargs)
         return self.__request('v3/openOrders', params, 'GET', True)
 
-    def all_orders(self, **kwargs):
-        params = {}
+    def all_orders(self, symbol, **kwargs):
+        params = {'symbol': symbol}
         params.update(kwargs)
         return self.__request('v3/allOrders', params, 'GET', True)
 
-    def account(self, kwargs):
-        params = {}
-        params.update(kwargs)
-        return self.__request('v3/account', params, 'GET', True)
+    def account(self):
+        return self.__request('v3/account', {}, 'GET', True)
 
-    def my_trades(self, **kwargs):
-        params = {}
+    def my_trades(self, symbol, **kwargs):
+        params = {'symbol': symbol}
         params.update(kwargs)
         return self.__request('v3/myTrades', params, 'GET', True)
 
