@@ -25,6 +25,6 @@ Service | Ver | Doc | TODO
 [Bl3p.eu](https://bl3p.eu/)|1|[doc](https://github.com/BitonicNL/bl3p-api/)|DONE
 [Cex.io](https://cex.io/)|1|[doc](https://cex.io/rest-api/)|DONE
 [CoinCap.io](https://coincap.io/)|1|[doc](https://github.com/CoinCapDev/CoinCap.io/)|DONE
-[CoinMap.org](https://coinmap.org)||[doc](https://coinmap.org/api/)|
+[CoinMap.org](https://coinmap.org)|1|[doc](https://coinmap.org/api/)|PARTLY
 [CoinMarketCap.com](https://coinmarketcap.com/)|2|[doc](https://coinmarketcap.com/api/)|DONE
 
