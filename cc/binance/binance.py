@@ -104,13 +104,13 @@ class Binance(object):
         params.update(kwargs)
         return self.__request('v3/order/test', params, 'POST', True)
 
-    def order_status(self, symbol, **kwargs):
-        params = {'symbol': symbol}
+    def order_status(self, **kwargs):
+        params = {}
         params.update(kwargs)
         return self.__request('v3/order', params, 'GET', True)
 
-    def order_cancel(self, symbol, **kwargs):
-        params = {'symbol': symbol}
+    def order_cancel(self, **kwargs):
+        params = {}
         params.update(kwargs)
         return self.__request('v3/order', params, 'DELETE', True)
 
@@ -119,16 +119,16 @@ class Binance(object):
         params.update(kwargs)
         return self.__request('v3/openOrders', params, 'GET', True)
 
-    def all_orders(self, symbol, **kwargs):
-        params = {'symbol': symbol}
+    def all_orders(self, **kwargs):
+        params = {}
         params.update(kwargs)
         return self.__request('v3/allOrders', params, 'GET', True)
 
     def account(self):
         return self.__request('v3/account', {}, 'GET', True)
 
-    def my_trades(self, symbol, **kwargs):
-        params = {'symbol': symbol}
+    def my_trades(self, **kwargs):
+        params = {}
         params.update(kwargs)
         return self.__request('v3/myTrades', params, 'GET', True)
 
