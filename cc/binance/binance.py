@@ -17,7 +17,7 @@ class Binance(object):
         self.__sec_key = sec_key
 
     def __get_credential(self, params):
-        params.update({'timestamp': (int(time.time()) * 1000)})
+        params.update({'timestamp': (int(time.time()) * 1000000)})
         query_str = urllib.parse.urlencode(params)
         signature = hmac.new(
                 self.__sec_key.encode('utf8'),

@@ -1,5 +1,6 @@
 
 
+import time
 import base64
 import hashlib
 import hmac
@@ -17,6 +18,7 @@ class Bl3p(object):
         self.__sec_key = sec_key
     
     def __get_credential(self, endpoint, params):
+        params.update({'nonce': str(int(time.time() * 1000000))})
         query_str = urllib.parse.urlencode(params)
         body = ('%s%c%s' % (endpoint, 0x00, query_str))
         sec_key_bin = base64.b64decode(self.__sec_key)

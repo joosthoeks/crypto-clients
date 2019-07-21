@@ -17,7 +17,7 @@ class Cex(object):
         self.__sec_key = sec_key
     
     def __get_credential(self):
-        nonce = int(time.time())
+        nonce = int(time.time() * 1000000)
         message = str(nonce) + self.__user_id + self.__pub_key
         signature = hmac.new(
                 self.__sec_key.encode('utf8'),
