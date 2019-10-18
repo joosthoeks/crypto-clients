@@ -41,9 +41,9 @@ class Bl3p(object):
             r = requests.post(full_url, data=params, headers=headers)
         else:
             r = requests.get(full_url, params=params)
-        response_code = r.status_code
-        if response_code != 200:
-            raise Exception('Exception response code: %d' % response_code)
+#        response_code = r.status_code
+#        if response_code != 200:
+#            raise Exception('Exception response code: %d' % response_code)
         return r.json()
 
     # Public API | HTTP Calls
