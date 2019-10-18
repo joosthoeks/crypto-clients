@@ -24,6 +24,7 @@ Service | Ver | Doc | TODO
 [Bitstamp.net](https://www.bitstamp.net/)|2|[doc](https://www.bitstamp.net/api/)|DONE
 [Bitwiseinvestments.com](https://www.bitwiseinvestments.com/)|1|[doc](https://developers.bitwiseinvestments.com/#Bitwise-API)|DONE
 [Bl3p.eu](https://bl3p.eu/)|1|[doc](https://github.com/BitonicNL/bl3p-api/)|DONE
+[Blockstream.info](https://blockstream.info/)|1|[doc](https://github.com/Blockstream/esplora/blob/master/API.md)|PARTLY
 [Cex.io](https://cex.io/)|1|[doc](https://cex.io/rest-api/)|DONE
 [CoinCap.io](https://coincap.io/)|1|[doc](https://github.com/CoinCapDev/CoinCap.io/)|DONE
 [CoinMap.org](https://coinmap.org)|1|[doc](https://coinmap.org/api/)|PARTLY
