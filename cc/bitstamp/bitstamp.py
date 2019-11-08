@@ -4,6 +4,8 @@ import requests
 import time
 import hmac
 import hashlib
+import uuid
+from urllib.parse import urlencode
 
 
 class Bitstamp(object):
@@ -14,34 +16,47 @@ class Bitstamp(object):
     def set_credential(self, customer_id, pub_key, sec_key):
         self.__customer_id = customer_id
         self.__pub_key = pub_key
-        self.__sec_key = sec_key
+        self.__sec_key = bytes(sec_key.encode('utf8'))
     
-    def __get_credential(self):
-        nonce = int(time.time() * 1000000)
-        message = str(nonce) + str(self.__customer_id) + self.__pub_key
-        signature = hmac.new(
-                self.__sec_key.encode('utf8'),
-                msg=message.encode('utf8'),
-                digestmod=hashlib.sha256
-                ).hexdigest().upper()
-        return nonce, signature
-
     def __request(self, endpoint, params, credential=False):
         full_url = '%s%s' % (self.__url, endpoint)
+
         if credential:
-            nonce, signature = self.__get_credential()
-            credential = {
-                    'key': self.__pub_key,
-                    'nonce': nonce,
-                    'signature': signature,
-                    }
-            params.update(credential)
-            r = requests.post(full_url, data=params)
+            
+            timestamp = str(int(round(time.time() * 1000)))
+            nonce = str(uuid.uuid4())
+            content_type = 'application/x-www-form-urlencoded'
+            payload = {'offset': '0'}
+#            payload = {}
+            payload.update(params)
+
+            payload_string = urlencode(payload)
+
+            message = 'BITSTAMP ' + self.__pub_key + 'POST' + full_url[8:] + '' + content_type + nonce + timestamp + 'v2' + payload_string
+            message = message.encode('utf-8')
+            signature = hmac.new(self.__sec_key, msg=message, digestmod=hashlib.sha256).hexdigest()
+            headers = {
+                'X-Auth': 'BITSTAMP ' + self.__pub_key,
+                'X-Auth-Signature': signature,
+                'X-Auth-Nonce': nonce,
+                'X-Auth-Timestamp': timestamp,
+                'X-Auth-Version': 'v2',
+                'Content-Type': content_type
+            }
+            r = requests.post(full_url, headers=headers, data=payload_string)
+
+            if not r.status_code == 200:
+                raise Exception('Status code not 200')
+
+            string_to_sign = (nonce + timestamp + r.headers.get('Content-Type')).encode('utf-8') + r.content
+            signature_check = hmac.new(self.__sec_key, msg=string_to_sign, digestmod=hashlib.sha256).hexdigest()
+
+            if not r.headers.get('X-Server-Auth-Signature') == signature_check:
+                raise Exception('Signatures do not match')
+
         else:
             r = requests.get(full_url, params=params)
-#        response_code = r.status_code
-#        if response_code != 200:
-#            raise Exception('Exception response code: %d' % response_code)
+
         return r.json()
 
     # Public data functions:
