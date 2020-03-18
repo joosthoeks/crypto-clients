@@ -1,4 +1,5 @@
 from .binance import *
+from .bitnodes import *
 from .bitstamp import *
 from .bitwise import *
 from .bl3p import *

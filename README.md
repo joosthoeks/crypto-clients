@@ -21,6 +21,7 @@ $ python3 coinmarketcap.py
 Service | Ver | Doc | TODO
 --- | --- | --- | ---
 [Binance.com](https://www.binance.com/)|1/3|[doc](https://github.com/binance-exchange/binance-official-api-docs/)|DONE
+[Bitnodes.io/](https://bitnodes.io/)|1|[doc](https://bitnodes.io/api/)|DONE
 [Bitstamp.net](https://www.bitstamp.net/)|2|[doc](https://www.bitstamp.net/api/)|DONE
 [Bitwiseinvestments.com](https://www.bitwiseinvestments.com/)|1|[doc](https://developers.bitwiseinvestments.com/#Bitwise-API)|DONE
 [Bl3p.eu](https://bl3p.eu/)|1|[doc](https://github.com/BitonicNL/bl3p-api/)|DONE
